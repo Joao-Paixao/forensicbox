@@ -13,7 +13,7 @@ sudo rm /var/run/wpa_supplicant/wlan0
 cp /home/audit/ForensicBox/defaults/dhcpcd_deactivate_wlan0.conf /etc/dhcpcd.conf
 sudo systemctl restart dhcpcd
 
-#sudo ifconfig eth0 down
+sudo ifconfig eth0 down
 
 # Start access point
 sudo /home/audit/ForensicBox/scripts/access_point/stop_ap.sh
