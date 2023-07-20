@@ -12,10 +12,10 @@ if [ "$CONNECTION_MODE" -eq 1 ]; then
 
                         echo '1';
                 else
-                        sudo /home/audit/ForensicBox/scripts/boot/init.sh
+                        sudo /home/audit/ForensicBox/scripts/boot/finish.sh
                 fi
         else
-                sudo /home/audit/ForensicBox/scripts/boot/init.sh
+                sudo /home/audit/ForensicBox/scripts/boot/finish.sh
         fi
 fi
 
@@ -35,6 +35,6 @@ if [ "$CONNECTION_MODE" -eq 2 ]; then
         if iwconfig wlan0 | grep -q "ESSID"; then
                 echo "1"
         else
-                sudo /home/audit/ForensicBox/scripts/boot/init.sh
+                sudo /home/audit/ForensicBox/scripts/boot/finish.sh
         fi
 fi
