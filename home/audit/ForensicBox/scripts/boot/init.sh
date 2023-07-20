@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# Stop services
+sudo systemctl stop hostapd.service
+sudo systemctl stop dnsmasq.service
+sudo systemctl stop wpa_supplicant.service
+sudo kill $(sudo pgrep wpa_supplicant)
+sudo rm /var/run/wpa_supplicant/wlan0
+sudo dhclient -r wlan0
+sudo systemctl stop dhcpcd.service
+
+sudo ifconfig eth0 down
+
 # Set defaults
 sudo cp /home/audit/ForensicBox/defaults/hostapd.conf /etc/hostapd/hostapd.conf
 sudo cp /home/audit/ForensicBox/defaults/dhcpcd_deactivate_wlan0.conf /etc/dhcpcd.conf
