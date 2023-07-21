@@ -4,23 +4,27 @@ CONNECTION_MODE=$(awk '/-connection/ {print $2}' '/home/audit/ForensicBox/output
 
 # Ethernet Connection
 if [ "$CONNECTION_MODE" -eq 1 ]; then
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - Script: $0 - Ethernet Mode" >> "/home/audit/ForensicBox/log.txt"
         sudo ifconfig eth0 up
         # Is Interface UP
         if [[ -n $(ip link show eth0 up) ]]; then
                 # Is Connected to a network
                 if [[ -n $(ip -4 addr show eth0 | grep -oP "(?<=inet\s)\d+(\.\d+){3}") ]]; then
-
-                        echo '1';
+                        echo "$(date '+%Y-%m-%d %H:%M:%S') - Script: $0 - Ethernet Connected" >> "/home/audit/ForensicBox/log.txt"
+                        exit 0
                 else
-                        sudo /home/audit/ForensicBox/scripts/boot/finish.sh
+                        echo "$(date '+%Y-%m-%d %H:%M:%S') - Script: $0 - Ethernet Fail 1" >> "/home/audit/ForensicBox/log.txt"
+                        exit 1
                 fi
         else
-                sudo /home/audit/ForensicBox/scripts/boot/finish.sh
+                echo "$(date '+%Y-%m-%d %H:%M:%S') - Script: $0 - Ethernet Fail 2" >> "/home/audit/ForensicBox/log.txt"
+                exit 1
         fi
 fi
 
 # Wireless Connection
 if [ "$CONNECTION_MODE" -eq 2 ]; then
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - Script: $0 - Wifi Mode" >> "/home/audit/ForensicBox/log.txt"
         SSID=$(awk '/-ssid/ {print $2}' '/home/audit/ForensicBox/outputs/audit.conf')
         PASS=$(awk '/-pass/ {print $2}' '/home/audit/ForensicBox/outputs/audit.conf')
 
@@ -33,8 +37,10 @@ if [ "$CONNECTION_MODE" -eq 2 ]; then
         sudo dhclient wlan0
 
         if iwconfig wlan0 | grep -q "ESSID"; then
-                echo "1"
+                echo "$(date '+%Y-%m-%d %H:%M:%S') - Script: $0 - Wifi Connected" >> "/home/audit/ForensicBox/log.txt"
+                exit 0
         else
-                sudo /home/audit/ForensicBox/scripts/boot/finish.sh
+                echo "$(date '+%Y-%m-%d %H:%M:%S') - Script: $0 - Wifi Fail" >> "/home/audit/ForensicBox/log.txt"
+                exit 1
         fi
 fi
