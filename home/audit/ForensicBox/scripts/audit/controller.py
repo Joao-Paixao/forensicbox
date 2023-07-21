@@ -46,3 +46,6 @@ if __name__ == '__main__':
     report_generator(hosts)
     with open("/home/audit/ForensicBox/log.txt", "a") as file:
             file.write(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " - Script: controller.py - Generated report\n")
+        
+    process = subprocess.Popen(['sudo', '/home/audit/ForensicBox/scripts/audit/finish.sh'],stdout=None)
+    process.wait()
