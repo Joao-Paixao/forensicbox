@@ -18,6 +18,8 @@ sudo cp /home/audit/ForensicBox/defaults/wpa_supplicant.conf /etc/wpa_supplicant
 
 # Remove previous Forensic Box outputs
 sudo rm /home/audit/ForensicBox/outputs/*
+sudo rm /home/audit/ForensicBox/scripts/audit/zap_report/*
+sudo rm /home/audit/ForensicBox/scripts/audit/reports/*
 
 # Turn off Access Point
 sudo /home/audit/ForensicBox/scripts/access_point/stop_ap.sh
